@@ -14,9 +14,16 @@ const colors = [
   "#7efff5",
 ];
 
+const randomX = Math.random() * 800;
+const randomY = Math.random() * 800;
+console.log(randomX, randomY);
+
 function onClick(event) {
   ctx.beginPath();
-  ctx.moveTo(0, 0);
+  const randomX = Math.random() * 800;
+  const randomY = Math.random() * 800;
+  console.log(randomX, randomY);
+  ctx.moveTo(randomX, randomY);
   const color = colors[Math.floor(Math.random() * colors.length)];
   ctx.strokeStyle = color;
   ctx.lineTo(event.offsetX, event.offsetY);
@@ -24,3 +31,4 @@ function onClick(event) {
 }
 
 canvas.addEventListener("mousemove", onClick);
+canvas.addEventListener("mousemove", onMouseMoveCounter);
