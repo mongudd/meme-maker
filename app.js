@@ -2,15 +2,25 @@ const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 canvas.width = 800;
 canvas.height = 800;
+ctx.lineWidth = 2;
 
-ctx.fillRect(500, 500, 15, 100);
-ctx.fillRect(665, 500, 15, 100);
-ctx.fillRect(560, 500, 60, 200);
-ctx.arc(590, 420, 50, 0, 2 * Math.PI);
-ctx.fill();
+const colors = [
+  "#ff3838",
+  "#ffb8b8",
+  "#c56cf0",
+  "#ff9f1a",
+  "#fff200",
+  "#32ff7e",
+  "#7efff5",
+];
 
-ctx.beginPath();
-ctx.fillStyle = "white";
-ctx.arc(610, 410, 8, 1 * Math.PI, 2 * Math.PI);
-ctx.arc(570, 410, 8, 1 * Math.PI, 2 * Math.PI);
-ctx.fill();
+function onClick(event) {
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  const color = colors[Math.floor(Math.random() * colors.length)];
+  ctx.strokeStyle = color;
+  ctx.lineTo(event.offsetX, event.offsetY);
+  ctx.stroke();
+}
+
+canvas.addEventListener("mousemove", onClick);
