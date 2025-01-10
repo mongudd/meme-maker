@@ -1,5 +1,6 @@
+const fileInput = document.getElementById("file");
 const eraseBtn = document.getElementById("erase-btn");
-const destroyBtn = document.getElementById("destroy-btn");
+const clearBtn = document.getElementById("clear-btn");
 const modeBtn = document.getElementById("mode-btn");
 const colorOptions = Array.from(
   document.getElementsByClassName("color-option")
@@ -67,7 +68,7 @@ function onCanvasClick() {
   }
 }
 
-function onDestroyClick() {
+function onClearClick() {
   ctx.fillStyle = "white";
   ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 }
@@ -78,7 +79,20 @@ function onEraseClick() {
   modeBtn.innerText = "Fill";
 }
 
+function onFileChange(event) {
+  const file = event.target.files[0];
+  const url = URL.createObjectURL(file);
+  const image = new Image();
+  image.src = url;
+  image.onload = function () {
+    ctx.drawImage(image, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    fileInput.value = null;
+  };
+}
+
 canvas.addEventListener("mousemove", onMove);
+/* another way
+canvas.onmousemove = function(){}*/
 canvas.addEventListener("mousedown", startPainting);
 canvas.addEventListener("mouseup", canclePainting);
 canvas.addEventListener("mouseleave", canclePainting);
@@ -88,5 +102,6 @@ lineWidth.addEventListener("change", onLineWidthChange);
 color.addEventListener("change", onColorChange);
 colorOptions.forEach((color) => color.addEventListener("click", onColorClick));
 modeBtn.addEventListener("click", onModeClick);
-destroyBtn.addEventListener("click", onDestroyClick);
+clearBtn.addEventListener("click", onClearClick);
 eraseBtn.addEventListener("click", onEraseClick);
+fileInput.addEventListener("change", onFileChange);
