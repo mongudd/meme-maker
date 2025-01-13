@@ -1,3 +1,4 @@
+const textInput = document.getElementById("text");
 const fileInput = document.getElementById("file");
 const eraseBtn = document.getElementById("erase-btn");
 const clearBtn = document.getElementById("clear-btn");
@@ -15,6 +16,7 @@ const CANVAS_HEIGHT = 800;
 canvas.width = 800;
 canvas.height = 800;
 ctx.lineWidth = lineWidth.value;
+ctx.lineCap = "round";
 let isPainting = false;
 let isFilling = false;
 
@@ -90,9 +92,22 @@ function onFileChange(event) {
   };
 }
 
-canvas.addEventListener("mousemove", onMove);
+function onDubleClick(event) {
+  const text = textInput.value;
+
+  if (text !== "") {
+    ctx.save();
+    ctx.lineWidth = 1;
+    ctx.font = "48px arial";
+    ctx.FillText(text, event.offsetX, event.offsetY);
+    ctx.restore();
+  }
+}
+
 /* another way
 canvas.onmousemove = function(){}*/
+canvas.addEventListener("dblclick", onDubleClick);
+canvas.addEventListener("mousemove", onMove);
 canvas.addEventListener("mousedown", startPainting);
 canvas.addEventListener("mouseup", canclePainting);
 canvas.addEventListener("mouseleave", canclePainting);
